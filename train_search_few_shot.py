@@ -22,6 +22,8 @@ from data_loader import OmniglotNShotDataset
 parser = argparse.ArgumentParser("Omniglot")
 parser.add_argument('--set', type=str, default='Omniglot', help='dataset name')
 parser.add_argument('--batch_size', type=int, default=24, help='batch size')
+parser.add_argument('--classes_per_set', type=int, default=5, help='way')
+parser.add_argument('--samples_per_class', type=int, default=1, help='shot')
 parser.add_argument('--learning_rate', type=float, default=0.1, help='init learning rate')
 parser.add_argument('--learning_rate_min', type=float, default=0.0, help='min learning rate')
 parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
@@ -49,8 +51,8 @@ utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
 
 batch_size = args.batch_size
 fce = True
-classes_per_set = 5
-samples_per_class = 1
+classes_per_set = args.classes_per_set
+samples_per_class = args.samples_per_class
 channels = 1
 
 total_train_batches = 200
