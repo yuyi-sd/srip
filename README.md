@@ -7,8 +7,8 @@ python train_search_few_shot.py --classes_per_set N --samples_per_class k
 ```
 #### Search on miniImageNet(N way k shot)
 
-Data preparation: 
 ```
+# Data preparation: 
 sh download_miniimagenet.sh
 ```
 ```
