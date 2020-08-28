@@ -128,7 +128,6 @@ def train(data, model, criterion, optimizer):
   model.train()
 
   for i in range(total_train_batches):
-  # for step, (input, target) in enumerate(train_queue):
     model.train()
     x_support_set, y_support_set, x_target, y_target = data.get_train_batch(True)
     x_support_set = Variable(torch.from_numpy(x_support_set)).float()

@@ -136,10 +136,6 @@ def main():
     logging.info('train_acc %f', train_acc)
 
     valid_acc, valid_obj = infer(val_iter, model, criterion)
-    # if valid_acc > best_acc:
-    #     best_acc = valid_acc
-    #     test_acc, test_obj = evaluate(test_loader, model, criterion)
-    #     logging.info('test_acc %f', test_acc)
     test_acc, test_obj = evaluate(test_loader, model, criterion)
     logging.info('test_acc %f', test_acc)
     best_test_acc = max(best_test_acc, test_acc)

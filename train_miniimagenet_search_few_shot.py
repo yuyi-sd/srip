@@ -166,11 +166,6 @@ def train(train_iter, val_iter, model, architect, criterion, optimizer, lr,epoch
         torch.zeros(batch_size, sequence_length, classes_per_set).scatter_(2,
                                                                                 y_support_set.data,
                                                                                 1), requires_grad=False)
-
-    # reshape channels and change order
-    # size = x_support_set.size()
-    # x_support_set = x_support_set.permute(0, 1, 4, 2, 3)
-    # x_target = x_target.permute(0, 3, 1, 2)
     
     n = x_support_set.size(0)
     
@@ -188,11 +183,6 @@ def train(train_iter, val_iter, model, architect, criterion, optimizer, lr,epoch
         torch.zeros(batch_size_search, sequence_length_search, classes_per_set).scatter_(2,
                                                                                 y_support_set_search.data,
                                                                                 1), requires_grad=False)
-
-    # reshape channels and change order
-    # size_search = x_support_set_search.size()
-    # x_support_set_search = x_support_set_search.permute(0, 1, 4, 2, 3)
-    # x_target_search = x_target_search.permute(0, 3, 1, 2)
     
     x_support_set = x_support_set.cuda()
     y_support_set_one_hot = y_support_set_one_hot.cuda()
@@ -244,10 +234,6 @@ def infer(test_loader, model, criterion):
           torch.zeros(batch_size_search, sequence_length_search, classes_per_set).scatter_(2,
                                                                                   y_support_set_search.data,
                                                                                   1), requires_grad=False)
-      # reshape channels and change order
-      # size_search = x_support_set_search.size()
-      # x_support_set_search = x_support_set_search.permute(0, 1, 4, 2, 3)
-      # x_target_search = x_target_search.permute(0, 3, 1, 2)
 
       x_support_set_search = x_support_set_search.cuda()
       y_support_set_one_hot_search = y_support_set_one_hot_search.cuda()

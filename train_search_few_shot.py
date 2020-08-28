@@ -109,9 +109,6 @@ def main():
     genotype = model.genotype()
     logging.info('genotype = %s', genotype)
 
-    #print(F.softmax(model.alphas_normal, dim=-1))
-    #print(F.softmax(model.alphas_reduce, dim=-1))
-
     # training
     train_acc, train_obj = train(data, model, architect, criterion, optimizer, lr,epoch)
     logging.info('train_acc %f', train_acc)
@@ -154,11 +151,7 @@ def train(data, model, architect, criterion, optimizer, lr,epoch):
     x_target = x_target.permute(0, 3, 1, 2)
     
     n = x_support_set.size(0)
-    # input = Variable(input, requires_grad=False).cuda()
-    # target = Variable(target, requires_grad=False).cuda()
-
-    # get a random minibatch from the search queue with replacement
-    # input_search, target_search = next(iter(valid_queue))
+    
     x_support_set_search, y_support_set_search, x_target_search, y_target_search = data.get_val_batch(False)
     x_support_set_search = Variable(torch.from_numpy(x_support_set_search)).float()
     y_support_set_search = Variable(torch.from_numpy(y_support_set_search), requires_grad=False).long()
@@ -178,13 +171,7 @@ def train(data, model, architect, criterion, optimizer, lr,epoch):
     size_search = x_support_set_search.size()
     x_support_set_search = x_support_set_search.permute(0, 1, 4, 2, 3)
     x_target_search = x_target_search.permute(0, 3, 1, 2)
-    #try:
-    #  input_search, target_search = next(valid_queue_iter)
-    #except:
-    #  valid_queue_iter = iter(valid_queue)
-    #  input_search, target_search = next(valid_queue_iter)
-    # input_search = Variable(input_search, requires_grad=False).cuda()
-    # target_search = Variable(target_search, requires_grad=False).cuda()
+  
     x_support_set = x_support_set.cuda()
     y_support_set_one_hot = y_support_set_one_hot.cuda()
     x_target = x_target.cuda()
@@ -222,8 +209,6 @@ def infer(data, model, criterion):
   model.eval()
   with torch.no_grad():
     for i in range(total_val_batches):
-      #input = input.cuda()
-      #target = target.cuda(non_blocking=True)
       x_support_set_search, y_support_set_search, x_target_search, y_target_search = data.get_val_batch(False)
       x_support_set_search = Variable(torch.from_numpy(x_support_set_search)).float()
       y_support_set_search = Variable(torch.from_numpy(y_support_set_search), requires_grad=False).long()
@@ -270,8 +255,6 @@ def evaluate(data, model, criterion):
   model.eval()
   with torch.no_grad():
     for i in range(total_test_batches):
-      #input = input.cuda()
-      #target = target.cuda(non_blocking=True)
       x_support_set_search, y_support_set_search, x_target_search, y_target_search = data.get_test_batch(False)
       x_support_set_search = Variable(torch.from_numpy(x_support_set_search)).float()
       y_support_set_search = Variable(torch.from_numpy(y_support_set_search), requires_grad=False).long()
